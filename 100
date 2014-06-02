@@ -1,0 +1,21 @@
+//http://acm.sgu.ru/problem.php?contest=0&problem=100
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+#include <cstdlib>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	int a, b;
+	while (cin >> a >> b)
+	{
+		cout << a +  b << endl;
+	}
+
+	return 0;
+}
