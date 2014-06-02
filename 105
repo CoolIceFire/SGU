@@ -1,0 +1,12 @@
+#include<cstdio>
+
+int n;
+
+int main()
+{
+	int ans;
+	scanf("%d",&n);
+	printf("%d", n/3*2+((n%3)==2?1:0));
+
+  return 0;
+}
