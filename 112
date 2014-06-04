@@ -1,0 +1,95 @@
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+
+int a1[10010], b1[10010], ans[10010];
+
+int judge()
+{
+	int i;
+	for (i = 10000; i >= 0; i--)
+	{
+		if (a1[i] > b1[i]) return 1;
+		if (a1[i] < b1[i]) return -1;
+	}
+	return 0;
+}
+
+void print()
+{
+	int i, flag = 0;
+	for (i = 10000; i >= 0; i--)
+	{
+		if (ans[i] != 0) flag = 1;
+		if (flag) printf("%d", ans[i]);
+	}
+	puts("");
+	return ;
+}
+
+int main()
+{
+	int i, a, b, aa, bb, j, ret;
+
+	scanf("%d%d", &a, &b);
+	aa = a, bb = b;
+	i = 0;
+	while (aa)
+	{
+		a1[i] = aa % 10;
+		i++, aa /= 10;
+	}
+	i = 0;
+	while (bb)
+	{
+		b1[i] = bb % 10;
+		i++, bb /= 10;
+	}
+	for (i = 1; i < b; i++)
+	{
+		for (j = 0; j < 10002; j++)
+		{
+			a1[j] *= a;
+			if (j != 0)
+			{
+				a1[j] += a1[j-1] / 10;
+				a1[j-1] %= 10;
+			}
+		}
+	}
+	for (i = 1; i < a; i++)
+	{
+		for (j = 0; j < 10002; j++)
+		{
+			b1[j] *= b;
+			if (j != 0)
+			{
+				b1[j] += b1[j-1] / 10;
+				b1[j-1] %= 10;
+			}
+		}
+	}
+	ret = judge();
+	if (ret == 0) printf("0\n");
+	else if (ret == 1)
+	{
+		for (i = 0; i < 10001; i++)
+		{
+			if (a1[i] >= b1[i]) ans[i] = a1[i] - b1[i];
+			else ans[i] = 10 + a1[i] - b1[i], a1[i+1] -= 1;
+		}
+		print();
+	}
+	else
+	{
+		for (i = 0; i < 10001; i++)
+		{
+			if (b1[i] >= a1[i]) ans[i] = b1[i] - a1[i];
+			else ans[i] = 10 + b1[i] - a1[i], b1[i+1] -= 1;
+		}
+		printf("-");
+		print();
+	}
+
+	return 0;
+}
