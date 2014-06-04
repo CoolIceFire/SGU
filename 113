@@ -1,0 +1,49 @@
+//根据 a*a < 10^9 可以知道a 肯定小于 10^5,所以把10^5以内的素数打表。
+//然后开始计算，最坏情况下计算量是10^6左右的计算量，然后n < 10
+//所以大概在10^7左右，没问题
+
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <cmath>
+
+int prime[100010] = {1, 1};
+
+int work(int a)
+{
+	int i;
+	if (a < 100010)
+		return prime[a];
+	for (i = 2; i <= sqrt(a) + 1; i++)
+		if (a % i == 0) return 1;
+	return 0;
+}
+
+int main()
+{
+	int i, j, n, a, b, temp;
+
+	for (i = 2; i < 100010; i++)
+	{
+		if (prime[i] == 0)
+		{
+			for (j = 2*i; j < 100010; j += i)
+				prime[j] = 1;
+		}
+	}
+	scanf("%d", &n);
+	while (n--)
+	{
+		scanf("%d", &a);
+		for (i = 2; i <= sqrt(a) + 1; i++)
+		{
+			if (prime[i] == 0 && a%i == 0)
+			{
+				if (!work(a/i)) { puts("Yes"); break; }
+			}
+		}
+		if (i > sqrt(a) + 1) puts("No");
+	}
+
+	return 0;
+}
