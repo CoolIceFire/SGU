@@ -1,0 +1,36 @@
+//easy problem
+//sort the TEL first, then will be very easy to solve it .
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+
+int a[8010];
+
+int cmp(const void *a, const void * b)
+{
+	return *(int *)a - *(int *)b;
+}
+
+int main()
+{
+	int k, n, i, j, ans = 2;
+
+	scanf("%d%d", &k, &n);
+	for (i = 0; i < n; i++)
+		scanf("%d", &a[i]);
+	qsort(a, n, sizeof(int), cmp);
+	for (i = 0; i < n; )
+	{
+		for (j = 0; j < k; j++)
+		{
+			if (j + i == n) break;
+			if (a[i] / 1000 != a[i+j] / 1000) break;
+		}
+		ans++;
+		if (j + i == n) break;
+		i += j;
+	}
+	printf("%d\n", ans);
+
+	return 0;
+}
