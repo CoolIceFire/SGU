@@ -1,0 +1,71 @@
+//动态规划问题
+//从底向上 O(n*n)
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+
+typedef struct Node
+{
+	int value, id;
+}Node;
+
+int f, v;
+Node dp[110];
+int value[110][110];
+Node ans[110][110];
+
+void print(int x, int y)
+{
+	if (x > f) return;
+	printf(" %d",  y);
+	print(x+1, ans[x][y].id);
+	return ;
+}
+
+int main()
+{
+	int i, j, a, b;
+
+	scanf("%d%d", &f, &v);
+	for (i = 1; i <= f; i++)
+	{
+		for (j = 1; j <= v; j++)
+		{
+			scanf("%d", &value[i][j]);
+			if (j > v-(f-i)) value[i][j] = -90;
+		}
+	}
+	a = -100, b = v;
+	for (i = v; i >= 1; i--)
+	{
+		if (a < value[f][i]) a = value[f][i], b = i;
+		dp[i].id = b, dp[i].value = a;
+	}
+	for (i = 1; i <= v; i++)
+		ans[f][i].id = -1, ans[f][i].value = value[f][i];
+	for (i = f-1; i >= 1; i--)
+	{
+		for (j = i+v-f; j >= i; j--)
+		{
+			ans[i][j].value = dp[j+1].value + value[i][j];
+			ans[i][j].id = dp[j+1].id;
+		}
+		a = -10000000, b = i+v-f;
+		for (j = i+v-f; j >= i; j--)
+		{
+			if (a < ans[i][j].value) a = ans[i][j].value, b = j;
+			dp[j].value = a, dp[j].id = b;
+		}
+	}
+	a = -10000000, b = 1;
+	for (i = 1; i <= 1+v-f; i++)
+	{
+		if (ans[1][i].value > a) a = ans[1][i].value, b = i;
+	}
+	printf("%d\n", a);
+	printf("%d", b);
+	print(2, ans[1][b].id);
+	puts("");
+
+	return 0;
+}
