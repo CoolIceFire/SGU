@@ -1,0 +1,18 @@
+//easy problem
+#include <cstdio>
+int a[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+int main()
+{
+	int n, m, i, sum, flag = 0;
+
+	scanf("%d%d", &n, &m);
+	if (m > 12 || n > a[m]) flag = 1;
+	if (flag) puts("Impossible");
+	else
+	{
+		for (sum = 0, i = 1; i < m; i++) sum += a[i];
+		printf("%d\n", (sum+n)%7 == 0 ? 7 : (sum+n)%7);
+	}
+
+	return 0;
+}
