@@ -1,0 +1,19 @@
+//easy problem
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+
+int min(int a, int b)
+{
+	return a < b ? a : b;
+}
+
+int main()
+{
+	int p, m, c, k, r, v;
+
+	scanf("%d%d%d%d%d%d", &p, &m, &c, &k, &r, &v);
+	printf("%d\n", min(min(p/k, m/r), min(m/r, c/v)));
+
+	return 0;
+}
