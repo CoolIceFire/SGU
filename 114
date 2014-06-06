@@ -1,0 +1,45 @@
+//由于都在x轴上，所以找到中位数即可。
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+
+typedef struct node
+{
+	int x, y;
+}node;
+node a[15005];
+
+int cmp(const void *a, const void *b)
+{
+	node aa, bb;
+	aa = *(node *)a, bb = *(node *)b;
+	return aa.x - bb.x;
+}
+
+int main()
+{
+	int n, i, sum = 0, s;
+	double a1, a2;
+	scanf("%d", &n);
+	for (i = 0; i < n; i++)
+	{
+		scanf("%d%d", &a[i].x, &a[i].y);
+		sum += a[i].y;
+	}
+	s = 0;
+	qsort(a, n, sizeof(node), cmp);
+	for (i = 0; i < n; i++)
+	{
+		s += a[i].y;
+		if (s >= sum/2)
+		{
+			a1 = a[i].x;
+			if (s >= sum/2+1) a2 = a[i].x;
+			else a2 = a[i+1].x;
+			break;
+		}
+	}
+	printf("%.5lf\n", (a1+a2)/2.0);
+
+	return 0;
+}
