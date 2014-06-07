@@ -1,0 +1,38 @@
+//显然末位0的个数随关于n单调递增，那么二分答案，并分解n!，看里面有多少个·素因子5就等于知道末位有多少个0了。
+//首先n!里，2肯定比5要多。而只有2*5=10。所以看5有多少个就可以了。
+//然后对于这个求法，你可以先把n化为5进制数，然后一位一位截过去，很容易理解这个做法。
+#include <cstdio>
+
+int calc(int n)
+{
+	int num = 0;
+	while (n)
+	{
+		n /= 5;
+		num += n;
+	}
+	return num;
+}
+
+int main()
+{
+	int ret, n, l, r, mid, flag = 0;
+
+	scanf("%d", &n);
+	l = 1, r = 400000100;
+	while (l < r)
+	{
+		mid = (l + r) >> 1;
+		ret = calc(mid);
+		if (ret > n) r = mid;
+		else if (ret == n)
+		{
+			r = mid, flag = 1;
+		}
+		else l = mid + 1;
+	}
+	if (flag) printf("%d\n", r);
+	else puts("No solution");
+
+	return 0;
+}
