@@ -1,0 +1,67 @@
+//欧拉路，将0-6视为点，将index设为两个点路径的权值
+//然后DFS，O(n)的复杂度
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <vector>
+using namespace std;
+
+int n;
+int du[10];
+int vis[110];
+int ans[110];
+vector<int> g[10][10];
+
+int dfs(int num, int x)
+{
+	int i, j, index;
+	if (num == n+1) return 1;
+	for (i = 0; i <= 6; i++)
+	{
+		for (j = 0; j < (int)g[x][i].size(); j++)
+		{
+			index = g[x][i][j];
+			index = index < 0 ? index * (-1) : index;
+			if (vis[index] == 0)
+			{
+				vis[index] = 1;
+				ans[num] = g[x][i][j];
+				if (dfs(num+1, i)) return 1;
+				vis[index] = 0;
+				break;
+			}
+		}
+	}
+	return 0;
+}
+
+int main()
+{
+	int ret, a, b, i, count = 0, st = 0;
+	scanf("%d", &n);
+	for (i = 1; i <= n; i++)
+	{
+		scanf("%d%d", &a, &b);
+		g[a][b].push_back(i);
+		g[b][a].push_back(-i);
+		du[a]++, du[b]++;
+	}
+	for (i = 0; i <= 6; i++)
+	{
+		if (du[i]) { st = i; break; }
+	}
+	for (i = 0; i <= 6; i++)
+	{
+		if (du[i]%2) st = i, count++;
+	}
+	if (count != 0 && count != 2) { puts("No solution"); return 0; }
+	ret = dfs(1, st);
+	if (ret)
+	{
+		for (i = 1; i <= n; i++)
+			printf("%d %c\n", ans[i] < 0 ? ans[i] * (-1) : ans[i], (ans[i] < 0 ? '-' : '+'));
+	}
+	else puts("No solution");
+
+	return 0;
+}
