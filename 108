@@ -1,0 +1,75 @@
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+
+char ch[1500010];
+char cmp[10] = {64, 1, 2, 4, 8, 16, 32, 64};
+typedef struct node
+{
+	int val, idx;
+}node;
+node bb[5010];
+int cmp1(const void *a, const void *b)
+{
+	return (*(node *)a).val - (*(node *)b).val;
+}
+
+int cmp2(const void *a, const void *b)
+{
+	return (*(node *)a).idx - (*(node *)b).idx;
+}
+
+int work(int a)
+{
+	int ret = a;
+	while (a)
+	{
+		ret += a % 10;
+		a /= 10;
+	}
+	return ret;
+}
+
+int main()
+{
+	int n, k, ret, i, j, cnt, index;
+	scanf("%d%d", &n, &k);
+	for (i = 0; i < k; i++)
+		scanf("%d", &bb[i].val), bb[i].idx = i;
+	qsort(bb, k, sizeof(node), cmp1);
+	memset(ch, 0, sizeof(ch));
+	for (i = 1; i <= n; i++)
+	{
+		ret = work(i);
+		if (ret <= n)
+			ch[ret/7-(ret%7==0?1:0)] = ch[ret/7-(ret%7==0?1:0)] | cmp[ret%7];
+	}
+	cnt = index = 0;
+	for (i = 0; ; i++)
+	{
+		for (j = 1; j <= 7; j++)
+		{
+			if (i*7 + j > n) break;
+			char ccc;
+			ccc = ch[i] & cmp[j];
+			if (ccc != cmp[j]) cnt++;
+			if (cnt == bb[index].val && index < k) 
+			{
+				bb[index].val = i*7 + j;
+				index++;
+				while (cnt == bb[index].val && index < k) {bb[index].val = i *7 + j; index++;}
+			}
+		}
+		if (j != 8) break;
+	}
+	printf("%d\n", cnt);
+	qsort(bb, k, sizeof(node), cmp2);
+	for (i = 0; i < k; i++)
+	{
+		if (i != 0) printf(" ");
+		printf("%d", bb[i].val);
+	}
+	puts("");
+
+	return 0;
+}
