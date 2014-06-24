@@ -1,0 +1,12 @@
+//画图，面积法，脑残了。。。
+#include <cstdio>
+#include <cmath>
+
+int main()
+{
+	double x, y, z, ans;
+	scanf("%lf%lf%lf", &x, &y, &z);
+	printf("%.7lf\n", 1.0 - pow((y-x)*60.0-z, 2) / pow((y-x)*60, 2));
+
+	return 0;
+}
