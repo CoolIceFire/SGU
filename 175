@@ -1,0 +1,30 @@
+#include <cstdio>
+
+int work(int left, int right, int n, int index)
+{
+	int k = n / 2, ret;
+
+	if (n == 1) return left;
+	if (index <= k)
+	{
+		ret = work(right - k + 1, right, k, k - index + 1);
+		if (ret) return ret;
+	}
+	else
+	{
+		ret = work(left, left + k + (n%2 == 0 ? -1 : 0), n-k, n - index + 1);
+		if (ret) return ret;
+	}
+
+	return 0;
+}
+
+int main()
+{
+	int n, q;
+
+	scanf("%d%d", &n, &q);
+	printf("%d\n", work(1, n, n, q));
+	
+	return 0;
+}
