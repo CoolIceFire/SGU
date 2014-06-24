@@ -1,0 +1,38 @@
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+
+typedef struct node
+{
+	int a, b, vis;
+}node;
+node arr[16010];
+
+int cmp(const void *a, const void *b)
+{
+	return (*(node *)a).a - (*(node *)b).a;
+}
+
+int main()
+{
+	int N, i, ans = 0, j;
+	scanf("%d", &N);
+	for (i = 0; i < N; i++)
+		scanf("%d%d", &arr[i].a, &arr[i].b);
+	qsort(arr, N, sizeof(node), cmp);
+	for (i = 0; i < N; i++)
+	{
+		if (i != 0 && arr[i].b < arr[i-1].b) continue;
+		for (j = i+1; j < N; j++)
+		{
+			if (arr[i].b > arr[j].b)
+				arr[j].vis = 1;
+		}
+	}
+	for (i = 0; i < N; i++)
+		ans += arr[i].vis;
+
+	printf("%d\n", ans);
+
+	return 0;
+}
