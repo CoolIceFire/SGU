@@ -1,0 +1,53 @@
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <map>
+#include <cmath>
+#include <ctime>
+#include <set>
+
+using namespace std;
+
+int main()
+{
+	char ch[10010];
+	string ret = "";
+	int len, i, j, k, flag = 0;
+
+	scanf("%s", ch);
+	len = strlen(ch);
+	for (i = 0; i < len; i++)
+	{
+		if ((i%2 == 0 && ch[i] == '(') || (i%2 && ch[i] == ')')) continue;
+		else break;
+	}
+	if (i == len) puts("No solution");
+	else
+	{
+		j = 0;
+		for (i = len-1; i >= 0; i -= 2)
+		{
+			if (ch[i] == ')' && ch[i-1] == '(') continue;
+			else break;
+		}
+		while (ch[i] == ')') i--;
+		for (int idx = 0; idx < i; idx++)
+		{
+			if (ch[idx] == '(') j++;
+			ret += ch[idx];
+		}
+		ret += ')';
+		for (int idx = 0; idx < len/2-j; idx++)
+			ret += '(';
+		j = ret.length();
+		for (i = 0; i < len - j; i++)
+			ret += ')';
+		cout << ret << endl;
+	}
+
+	return 0;
+}
