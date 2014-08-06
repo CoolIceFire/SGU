@@ -1,0 +1,16 @@
+#include <cstdio>
+
+long long int ans[65555] = {1, 2, 4};
+
+int main()
+{
+	int n, i;
+	
+	for (i = 3; i < 65536; i++)
+		ans[i] = ans[i-1] + i;
+	
+	scanf("%d", &n);
+	printf("%lld\n", ans[n]);
+	
+	return 0;
+}
