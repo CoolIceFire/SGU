@@ -1,0 +1,27 @@
+#include <cstdio>
+#include <cstring>
+#include <cmath>
+
+const int mm = 10000;
+
+int main()
+{
+	double L, ans;
+	int i, n;
+	long long int len, v, t, sum = 0;
+	
+	scanf("%lf%d", &L, &n);
+	len = round(L * mm); // ATTENTION
+	for (i = 0; i < n; i++)
+	{
+		scanf("%lld%lld", &v, &t);
+		sum += v * t * mm;
+		sum %= len;
+	}
+	ans = (double)sum;
+	ans /= mm;
+	if (L - ans < ans) ans = L - ans;
+	printf("%.4lf\n", ans);
+	
+	return 0;	
+}
