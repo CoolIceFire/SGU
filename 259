@@ -1,0 +1,52 @@
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <map>
+#include <cmath>
+#include <ctime>
+#include <set>
+
+using namespace std;
+
+typedef struct node
+{
+	int t, l;
+}node;
+
+node arr[110];
+
+int cmp (const void *a, const void *b)
+{
+	node aa, bb;
+	aa = *(node *)a, bb = *(node *)b;
+	return bb.l - aa.l;
+}
+
+int main()
+{
+	int n, i, st, sl, temp;
+	
+	scanf("%d", &n);
+	for (i = 0; i < n; i++)
+		scanf("%d", &arr[i].t);
+	for (i = 0; i < n; i++)
+		scanf("%d", &arr[i].l);
+	qsort(arr, n, sizeof(node), cmp);
+	for (st = 0, i = 0; i < n; i++)
+		st += arr[i].t;
+	sl = 0, temp = st;
+	temp = st - arr[0].t;
+	for (i = 0; i < n-1; i++)
+	{
+		sl = max(arr[i].l - temp, sl);
+		temp -= arr[i+1].t;
+	}
+	sl = max(arr[n-1].l, sl);
+	printf("%d\n", sl + st);
+
+	return 0;
+}
