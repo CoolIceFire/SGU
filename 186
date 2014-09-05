@@ -1,0 +1,49 @@
+//一条链子Li个扣子，一分钟内可以拆一个扣子，用来绑定2条链子
+//求使其变为一条链子的最短时间。贪心。每次拆最短的，绑定最长的。
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <map>
+#include <cmath>
+#include <ctime>
+#include <set>
+
+using namespace std;
+
+int cmp (const void *a, const void *b)
+{
+	return *(int *)b - *(int *)a;
+}
+
+int main()
+{
+	int n, a[110], i, j, ans = 0;
+
+	memset(a, 0, sizeof(a));
+	scanf("%d", &n);
+	for (i = 0; i < n; i++)
+		scanf("%d", &a[i]);
+	if (n != 0)
+	{
+		while (1)
+		{
+			qsort(a, n, sizeof(int), cmp);
+			for (i = 0; i < n; i++)
+				if (a[i] == 0) break;
+			if (i == 1) break;
+			else if (i == 2)
+			{
+				ans++;
+				break;
+			}
+			else a[i-1] -= 1, a[0] += a[1], a[1] = 0, ans++;
+		}
+	}
+	printf("%d\n", ans);
+
+	return 0;
+}
