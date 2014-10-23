@@ -1,0 +1,49 @@
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <map>
+#include <cmath>
+#include <ctime>
+#include <set>
+#include <stack>
+#define INF 1000010
+
+using namespace std;
+
+char ch[1010];
+int k;
+int ans[1010];
+
+int main()
+{
+	int i, j, idx, maxnum, pos, len;
+	while (~scanf("%s %d", ch, &k))
+	{
+		idx = 0;
+		len = strlen(ch);
+		k = len - k;
+		i = strlen(ch)-1;
+		pos = -1;
+		while (k)
+		{
+			maxnum = -1;
+			for (i = pos+1 ; i <= len-k; i++)
+			{
+				if (ch[i]-'0' > maxnum)
+					maxnum = ch[i] - '0', pos = i;
+			}
+			ans[idx++] = maxnum;
+			k--;
+		}
+		for (i = 0; i < idx; ++i)
+			printf("%d", ans[i]);
+		if (idx == 0) printf("0");
+		puts("");
+	}
+
+	return 0;
+}
